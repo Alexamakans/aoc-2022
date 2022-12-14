@@ -3,6 +3,7 @@ package aoc
 import (
 	"fmt"
 	"os"
+	"strings"
 )
 
 func Run(want1, want2 int, f1, f2 func(string) int) {
@@ -47,4 +48,8 @@ func getTestInput() string {
 	}
 
 	return string(s)
+}
+
+func SplitLines(s string) []string {
+	return strings.Split(s, "\r\n")
 }
