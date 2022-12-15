@@ -3,6 +3,7 @@ package aoc
 import (
 	"fmt"
 	"os"
+	"strconv"
 	"strings"
 
 	"golang.org/x/exp/constraints"
@@ -105,4 +106,9 @@ func ExcludeUniques[T constraints.Ordered](a, b []T) []T {
 	}
 
 	return duplicates
+}
+
+func StrToInt(s string) int {
+	v, _ := strconv.Atoi(s)
+	return v
 }
