@@ -37,7 +37,7 @@ func Test_ChunkString(t *testing.T) {
 	}
 }
 
-func Test_ChunkStringSlice(t *testing.T) {
+func Test_ChunkSlice(t *testing.T) {
 	testCases := []struct {
 		value     []string
 		numChunks int
@@ -63,7 +63,7 @@ func Test_ChunkStringSlice(t *testing.T) {
 	}
 
 	for _, tc := range testCases {
-		got := aoc.ChunkStringSlice(tc.value, tc.numChunks)
+		got := aoc.ChunkSlice(tc.value, tc.numChunks)
 		for k := range got {
 			if !aoc.EqualSlice(got[k], tc.want[k]) {
 				t.Fatalf("want %v; got %v (value=%s, numChunks=%d)", tc.want[k], got[k], tc.value, tc.numChunks)
