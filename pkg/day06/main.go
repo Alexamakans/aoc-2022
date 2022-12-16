@@ -10,10 +10,14 @@ func main() {
 
 func getFirstMarkerEndIndex(s string, packetLength int) int {
 	for windowStart := range s {
+		windowEnd := windowStart + packetLength
 		for i := 0; i < packetLength; i++ {
-			slice := append([]rune(s[windowStart:windowStart+i]), []rune(s[windowStart+i+1:windowStart+packetLength])...)
+			beforeCurrentEnd := windowStart + i
+			afterCurrentStart := windowStart + i + 1
+			beforeCurrent := []rune(s[windowStart:beforeCurrentEnd])
+			afterCurrent := []rune(s[afterCurrentStart:windowEnd])
 			r := rune(s[windowStart+i])
-			if aoc.Contains(slice, r) {
+			if aoc.Contains(beforeCurrent, r) || aoc.Contains(afterCurrent, r) {
 				break
 			}
 
