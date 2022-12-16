@@ -28,7 +28,7 @@ func partTwo(input string) int {
 	lines := aoc.SplitLines(input)
 	const chunkSize = 3
 	numChunks := len(lines) / chunkSize
-	groups := aoc.ChunkStringSlice(lines, numChunks)
+	groups := aoc.ChunkSlice(lines, numChunks)
 	score := 0
 	for _, group := range groups {
 		badge := getBadge([]rune(group[0]), []rune(group[1]), []rune(group[2]))
