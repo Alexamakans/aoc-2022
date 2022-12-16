@@ -9,29 +9,29 @@ import (
 	"golang.org/x/exp/constraints"
 )
 
-func Run(want1, want2 int, f1, f2 func(string) int) {
+func Run[T constraints.Ordered](want1, want2 T, f1, f2 func(input string) T) {
 	{
 		got1 := f1(GetTestInput())
 		if got1 != want1 {
-			panic(fmt.Errorf("got %d; want %d", got1, want1))
+			panic(fmt.Errorf("got %v; want %v", got1, want1))
 		}
 
-		fmt.Printf("Passed the first test, got %d\n", got1)
+		fmt.Printf("Passed the first test, got %v\n", got1)
 
 		got1 = f1(GetInput())
-		fmt.Printf("Part 1: %d\n", got1)
+		fmt.Printf("Part 1: %v\n", got1)
 	}
 
 	{
 		got2 := f2(GetTestInput())
 		if got2 != want2 {
-			panic(fmt.Errorf("got %d; want %d", got2, want2))
+			panic(fmt.Errorf("got %v; want %v", got2, want2))
 		}
 
-		fmt.Printf("Passed the second test, got %d\n", got2)
+		fmt.Printf("Passed the second test, got %v\n", got2)
 
 		got2 = f2(GetInput())
-		fmt.Printf("Part 2: %d", got2)
+		fmt.Printf("Part 2: %v", got2)
 	}
 }
 
@@ -68,16 +68,19 @@ func ChunkString(s string, numChunks int) []string {
 	return chunks
 }
 
-func ChunkStringSlice(sSlice []string, numChunks int) [][]string {
-	chunkSize := len(sSlice) / numChunks
-	var groups [][]string
-	for i := 0; i < len(sSlice); i += chunkSize {
-		groups = append(groups, sSlice[i:i+chunkSize])
+func ChunkSlice[T any](slice []T, numChunks int) [][]T {
+	chunkSize := len(slice) / numChunks
+	var chunks [][]T
+	for i := 0; i < len(slice); i += chunkSize {
+		chunks = append(chunks, slice[i:i+chunkSize])
 	}
-	return groups
+	return chunks
 }
 
-func SliceEqual[T constraints.Ordered](a, b []T) bool {
+func EqualSlice[T constraints.Ordered](a, b []T) bool {
+	if len(a) != len(b) {
+		return false
+	}
 	for k := range a {
 		if a[k] != b[k] {
 			return false
@@ -111,4 +114,16 @@ func ExcludeUniques[T constraints.Ordered](a, b []T) []T {
 func StrToInt(s string) int {
 	v, _ := strconv.Atoi(s)
 	return v
+}
+
+func ReverseSlice[T any](s []T) []T {
+	a := make([]T, len(s))
+	copy(a, s)
+
+	for i := len(a)/2 - 1; i >= 0; i-- {
+		opp := len(a) - 1 - i
+		a[i], a[opp] = a[opp], a[i]
+	}
+
+	return a
 }

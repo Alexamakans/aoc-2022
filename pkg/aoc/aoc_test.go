@@ -31,7 +31,7 @@ func Test_ChunkString(t *testing.T) {
 
 	for _, tc := range testCases {
 		got := aoc.ChunkString(tc.value, tc.numChunks)
-		if !aoc.SliceEqual(got, tc.want) {
+		if !aoc.EqualSlice(got, tc.want) {
 			t.Fatalf("want %v; got %v (value=%s, numChunks=%d)", tc.want, got, tc.value, tc.numChunks)
 		}
 	}
@@ -65,7 +65,7 @@ func Test_ChunkStringSlice(t *testing.T) {
 	for _, tc := range testCases {
 		got := aoc.ChunkStringSlice(tc.value, tc.numChunks)
 		for k := range got {
-			if !aoc.SliceEqual(got[k], tc.want[k]) {
+			if !aoc.EqualSlice(got[k], tc.want[k]) {
 				t.Fatalf("want %v; got %v (value=%s, numChunks=%d)", tc.want[k], got[k], tc.value, tc.numChunks)
 			}
 		}
