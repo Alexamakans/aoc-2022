@@ -7,24 +7,32 @@ type file struct {
 }
 
 // compile-check conformity to entry interface
-var _ entry = file{}
+var _ entry = &file{}
 
-func (f file) getName() string {
+func (f *file) getName() string {
 	return f.name
 }
 
-func (f file) getSize() int {
+func (f *file) getSize() int {
 	return f.size
 }
 
-func (f file) isDir() bool {
+func (f *file) isDir() bool {
 	return false
 }
 
-func (f file) getParent() entry {
+func (f *file) setParent(parent entry) {
+	f.parent = parent
+}
+
+func (f *file) getParent() entry {
 	return f.parent
 }
 
-func (f file) getEntries() []entry {
-	return nil
+func (f *file) getEntries() []entry {
+	panic("getEntries() not implemented for file")
+}
+
+func (f *file) addChild(child entry) {
+	panic("addChild(entry) not implemented for file")
 }

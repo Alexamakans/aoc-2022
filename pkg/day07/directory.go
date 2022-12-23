@@ -25,10 +25,19 @@ func (d *directory) getSize() int {
 	return size
 }
 
+func (d *directory) setParent(parent entry) {
+	d.parent = parent
+}
+
 func (d *directory) getParent() entry {
 	return d.parent
 }
 
 func (d *directory) getEntries() []entry {
 	return d.entries
+}
+
+func (d *directory) addChild(child entry) {
+	child.setParent(d)
+	d.entries = append(d.entries, child)
 }
