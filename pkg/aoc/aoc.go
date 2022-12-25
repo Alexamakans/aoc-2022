@@ -2,6 +2,7 @@ package aoc
 
 import (
 	"fmt"
+	"math"
 	"os"
 	"strconv"
 	"strings"
@@ -23,7 +24,7 @@ func Run[T constraints.Ordered](want1, want2 T, f1, f2 func(input string) T) {
 	}
 
 	{
-		got2 := f2(GetTestInput())
+		got2 := f2(GetTestInput2())
 		if got2 != want2 {
 			panic(fmt.Errorf("got %v; want %v", got2, want2))
 		}
@@ -48,6 +49,15 @@ func GetTestInput() string {
 	s, err := os.ReadFile("input_test.txt")
 	if err != nil {
 		panic(err)
+	}
+
+	return string(s)
+}
+
+func GetTestInput2() string {
+	s, err := os.ReadFile("input_test2.txt")
+	if err != nil {
+		return GetTestInput()
 	}
 
 	return string(s)
@@ -116,6 +126,10 @@ func StrToInt(s string) int {
 	return v
 }
 
+func IntToStr(v int) string {
+	return strconv.Itoa(v)
+}
+
 func ReverseSlice[T any](s []T) []T {
 	a := make([]T, len(s))
 	copy(a, s)
@@ -126,4 +140,8 @@ func ReverseSlice[T any](s []T) []T {
 	}
 
 	return a
+}
+
+func Clamp(v, min, max int) int {
+	return int(math.Min(float64(max), math.Max(float64(v), float64(min))))
 }
