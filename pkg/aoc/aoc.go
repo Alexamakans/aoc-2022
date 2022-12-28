@@ -10,7 +10,7 @@ import (
 	"golang.org/x/exp/constraints"
 )
 
-func Run[T constraints.Ordered](want1, want2 T, f1, f2 func(input string) T) {
+func Run[T constraints.Ordered, T2 constraints.Ordered](want1 T, want2 T2, f1 func(input string) T, f2 func(input string) T2) {
 	{
 		got1 := f1(GetTestInput())
 		if got1 != want1 {
@@ -123,6 +123,11 @@ func ExcludeUniques[T constraints.Ordered](a, b []T) []T {
 
 func StrToInt(s string) int {
 	v, _ := strconv.Atoi(s)
+	return v
+}
+
+func StrToInt64(s string) int64 {
+	v, _ := strconv.ParseInt(s, 10, 64)
 	return v
 }
 
